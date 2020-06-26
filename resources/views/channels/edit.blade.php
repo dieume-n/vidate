@@ -11,7 +11,7 @@
 
                         <form action="{{ route('channels.update', $channel) }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            @method('put')
+                            @method('patch')
                             <div class="form-group {{ $errors->has('name') ? 'is-invalid' : ''}}">
                                 <label for="name">Name</label>
                                 <input type="text" id="name" name="name" class="form-control" value="{{ old('name') ? old('name') : $channel->name }}">

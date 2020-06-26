@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Channel;
-use Illuminate\Http\Request;
 use App\Http\Requests\ChannelUpdateRequest;
 
 class ChannelController extends Controller
@@ -24,12 +23,13 @@ class ChannelController extends Controller
     {
         $this->authorize('update', $channel);
         
+        
         $channel->update([
             'name' => $request->name,
             'description' => $request->description
         ]);
 
-        return redirect()->route('channels.edit', $channel);
+        return redirect()->route('channels.edit', $channel->slug);
 
     }
 }

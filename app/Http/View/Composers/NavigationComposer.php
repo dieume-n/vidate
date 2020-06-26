@@ -13,6 +13,6 @@ class NavigationComposer
             return;
         }
 
-        $view->with('channel', auth()->user()->channel->first());
+        $view->with('channel', auth()->user()->channel->slug);
     }
 }

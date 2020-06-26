@@ -24,7 +24,7 @@ class ChannelUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $channelId = Auth::user()->channel->first()->id;
+        $channelId = Auth::user()->channel->id;
         return [
             'name' => 'required|string|max:255|unique:channels,name,' . $channelId,
             'description' => 'max:1000'
