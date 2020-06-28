@@ -23,12 +23,12 @@
                             @enderror
                         </div>
 
+
                         <div class="form-group">
                             <label for="slug">Unique URL</label>
-                            <h3>
-                                <span
-                                    class="badge badge-dark">{{config('app.url'). '/channels/'. $channel->slug}}</span>
-                            </h3>
+                            <div class="alert alert-info" role="alert">
+                                {{config('app.url'). '/channels/'. $channel->slug}}
+                            </div>
                         </div>
 
                         <div class="form-group">
