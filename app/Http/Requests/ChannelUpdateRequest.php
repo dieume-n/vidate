@@ -27,6 +27,7 @@ class ChannelUpdateRequest extends FormRequest
         $channelId = Auth::user()->channel->id;
         return [
             'name' => 'required|string|max:255|unique:channels,name,' . $channelId,
+            'image' => 'image',
             'description' => 'max:1000'
         ];
     }
