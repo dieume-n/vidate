@@ -19,6 +19,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script>
+        window.vidate = {
+            url:'{{ config('app.url') }}',
+            user: {
+                id: {{ Auth::check() ? Auth::user()->id : null }},
+                authenticated: {{ Auth::check() ? 'true' : 'false' }},
+            }
+        }
+    </script>
 </head>
 
 <body>
