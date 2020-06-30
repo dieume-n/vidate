@@ -2017,7 +2017,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["url"],
   data: function data() {
     return {
       uid: null,
@@ -2030,6 +2033,11 @@ __webpack_require__.r(__webpack_exports__);
       saveStatus: null,
       fileProgress: 0
     };
+  },
+  computed: {
+    video_link: function video_link() {
+      return "".concat(this.url, "/videos/").concat(this.uid);
+    }
   },
   methods: {
     fileInputChange: function fileInputChange() {
@@ -2091,6 +2099,15 @@ __webpack_require__.r(__webpack_exports__);
       e.percent = e.loaded / e.total * 100;
       this.fileProgress = e.percent;
     }
+  },
+  mounted: function mounted() {
+    var _this4 = this;
+
+    window.onbeforeunload = function () {
+      if (_this4.uploading && !_this4.uploadComplete && !_this4.failed) {
+        return "Are you sure you want to navigate away?";
+      }
+    };
   }
 });
 
@@ -37727,19 +37744,12 @@ var render = function() {
                           _vm._v(
                             "\n              Your video will be available at\n              "
                           ),
-                          _c("a", { attrs: { href: "" } }, [
-                            _vm._v(
-                              _vm._s(_vm.$root.url) +
-                                "/videos/" +
-                                _vm._s(_vm.uid)
-                            )
-                          ]),
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(_vm.$root.url) +
-                              "/videos/" +
-                              _vm._s(_vm.uid) +
-                              "\n            "
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: _vm.video_link, target: "_blank" }
+                            },
+                            [_vm._v(_vm._s(_vm.video_link))]
                           )
                         ]
                       )

@@ -24,8 +24,10 @@
             <div id="video-form" v-if="uploading && !failed">
               <div class="alert alert-info" role="alert" v-if="!uploadComplete">
                 Your video will be available at
-                <a href>{{ $root.url }}/videos/{{ uid }}</a>
-                {{ $root.url }}/videos/{{ uid }}
+                <a
+                  :href="video_link"
+                  target="_blank"
+                >{{ video_link }}</a>
               </div>
 
               <div class="alert alert-success" role="alert" v-if="uploadComplete">
@@ -78,6 +80,7 @@
 </template>
 <script>
 export default {
+  props: ["url"],
   data() {
     return {
       uid: null,
@@ -90,6 +93,11 @@ export default {
       saveStatus: null,
       fileProgress: 0
     };
+  },
+  computed: {
+    video_link: function() {
+      return `${this.url}/videos/${this.uid}`;
+    }
   },
   methods: {
     fileInputChange() {
@@ -161,6 +169,13 @@ export default {
       e.percent = (e.loaded / e.total) * 100;
       this.fileProgress = e.percent;
     }
+  },
+  mounted() {
+    window.onbeforeunload = () => {
+      if (this.uploading && !this.uploadComplete && !this.failed) {
+        return "Are you sure you want to navigate away?";
+      }
+    };
   }
 };
 </script>

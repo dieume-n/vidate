@@ -36,6 +36,7 @@ class UploadVideo implements ShouldQueue
         $path = storage_path().'/app/uploads/'.$this->video->video_filename;
 
         \Cloudder::uploadVideo($path, null,[
+            "folder" => "vidate/videos/",
             "eager" =>[
                 ["streaming_profile" => "full_hd", "format" => "m3u8"]
             ],

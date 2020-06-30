@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<video-upload></video-upload>
+<video-upload :url="'{{ config('app.url') }}'"></video-upload>
 @endsection

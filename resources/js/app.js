@@ -13,5 +13,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
-    data: window.vidate ? window.vidate : null
+    // data: window.vidate ? window.vidate : null
 });
