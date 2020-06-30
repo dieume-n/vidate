@@ -16,12 +16,13 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('channel_id')->constrained()->onDelete('cascade');
-            $table->string('uid')->index();
+            $table->string('uid')->unique()->index();
             $table->string('title');
             $table->text('description')->nullable();
             $table->boolean('processed')->default(false);
             $table->string('video_filename')->nullable();
             $table->string('video_url')->nullable();
+            $table->string('video_public_id')->nullable();
             $table->enum('visibility', ['public', 'unlisted', 'private']);
             $table->boolean('allow_votes')->default(false);
             $table->boolean('allow_comments')->default(false);

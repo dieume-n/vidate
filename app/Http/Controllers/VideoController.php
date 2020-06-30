@@ -8,6 +8,21 @@ use App\Http\Requests\VideoUpdateRequest;
 
 class VideoController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        $videos = $request->user()->videos()->latestFirst()->paginate(5);
+        return view('video.index', compact('videos'));
+    }
+
+    public function edit(Video $video)
+    {
+        $this->authorize('edit', $video);
+
+        return view('video.edit', compact('video'));
+    }
+
+
     public function store(Request $request) 
     {
         $uid = uniqid(true);

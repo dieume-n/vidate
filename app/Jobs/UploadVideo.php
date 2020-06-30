@@ -42,12 +42,13 @@ class UploadVideo implements ShouldQueue
             ],
             "eager_async" => true,
         ] );
-        $cloundary_upload = Cloudder::getResult();
-        if ($cloundary_upload){
+        $cloudinary_upload = Cloudder::getResult();
+        if ($cloudinary_upload){
             Storage::disk('local')->delete("uploads/{$this->video->video_filename}");
         }
 
-        $this->video->video_url = $cloundary_upload['eager'][0]['secure_url'];
+        $this->video->video_public_id = $cloudinary_upload['public_id'];
+        $this->video->video_url = $cloudinary_upload['eager'][0]['secure_url'];
         $this->video->processed = true;
         $this->video->save();
     }

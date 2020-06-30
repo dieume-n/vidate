@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Channel::class);
     }
+
+    public function videos()
+    {
+        return $this->hasManyThrough(Video::class, Channel::class);
+    }
 }
