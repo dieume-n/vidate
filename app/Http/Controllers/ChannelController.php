@@ -9,6 +9,10 @@ use App\Http\Requests\ChannelUpdateRequest;
 
 class ChannelController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function show(Channel $channel)
     {
         return view('channels.show', compact('channel'));
