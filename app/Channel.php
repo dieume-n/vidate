@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Avatar;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
@@ -35,11 +36,6 @@ class Channel extends Model
         return 'slug';
     }
 
-    public function getImage()
-    {
-        return '/profile/default_avatar.png';
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -48,5 +44,10 @@ class Channel extends Model
     public function videos()
     {
         return $this->hasMany(Video::class);
+    }
+
+    public function getImage()
+    {
+        return $this->image_file ? $this->image_file : Avatar::create(ucwords($this->name))->toBase64();
     }
 }

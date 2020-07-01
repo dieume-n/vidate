@@ -167,6 +167,7 @@ return [
          */
 
         Intervention\Image\ImageServiceProvider::class,
+        Laravolt\Avatar\ServiceProvider::class,
         
 
         /*
@@ -232,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
+        'Avatar'    => Laravolt\Avatar\Facade::class,
 
     ],
 

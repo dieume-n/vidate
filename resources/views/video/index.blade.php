@@ -28,8 +28,11 @@
                                                         <span>{{ $video->created_at->toDateTimeString() }}</span>
                                                     @endif
                                                 </p>
-                                                <form method="get">
+                                                <form method="post" action="{{ route('videos.destroy', $video->uid) }}">
+                                                    @csrf
+                                                    @method('DELETE')
                                                     <a href="{{ route('videos.edit',$video->uid) }}" class="btn btn-outline-info">Edit</a>
+                                                    <button class="btn btn-danger" type="submit">Delete</button>
                                                 </form>                                                
                                             </div>
                                             <div class="col-sm-6">

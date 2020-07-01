@@ -8,11 +8,14 @@
                 <div class="card-body">
                     <div class="media">
                         <div class="align-self-start mr-3">
-                            <img src="{{ $channel->image_file }}" alt="{{ $channel->name }} image"
-                                class="media-object img-rounded">
+                            @if($channel->image_file)
+                                <img src="{{ $channel->image_file }}" />
+                            @else
+                                {!! Avatar::create($channel->name)->setShape('square')->toSvg() !!}
+                            @endif
                         </div>
                         <div class="media-body ml-3">
-                            {{ $channel->name }}
+                            {{ ucwords($channel->name) }}
 
                             <ul class="list-inline">
                                 {{-- <li>
@@ -34,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="card ">
+            <div class="card mt-3">
                 <div class="card-header">Videos</div>
 
                 {{-- <div class="panel-body">
