@@ -9,19 +9,6 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
-
-    <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
-    <script src="https://www.jsdelivr.com/package/npm/@videojs/http-streaming"></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector@1.1.1/dist/videojs-hls-quality-selector.cjs.min.js">
-    </script>
-
-
-
-
-
 
     <!-- Styles -->
     <style>
@@ -97,26 +84,8 @@
 
         <div class="content">
 
-
-            <video-js id=vid1 width=600 height=300 class="vjs-default-skin" controls>
-                <source
-                    src="https://res.cloudinary.com/dwr5wuwhc/video/upload/sp_full_hd/v1593425370/o1jannvrp2wkx3x7nzpp.m3u8"
-                    type="application/x-mpegURL">
-            </video-js>
-
-
-            <script>
-                var player = videojs('vid1');
-                player.hlsQualitySelector({
-                    displayCurrentQuality: true,
-                });
-                player.play();
-            </script>
-
         </div>
     </div>
-
-
 </body>
 
 </html>

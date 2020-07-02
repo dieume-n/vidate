@@ -6,6 +6,7 @@ window.Vue = require('vue');
 
 
 Vue.component('video-upload', require('./components/VideoUpload.vue').default);
+Vue.component('video-player', require('./components/VideoPlayer.vue').default);
 
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);

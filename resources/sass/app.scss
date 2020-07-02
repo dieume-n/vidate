@@ -7,6 +7,12 @@
 // Components
 @import 'components/video';
 
+// Videojs
+@import '~video.js/dist/video-js.css';
+
+// Videojs Fantasy theme
+@import '~@videojs/themes/dist/fantasy/index.css';
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
