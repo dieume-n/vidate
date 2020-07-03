@@ -5,28 +5,40 @@
             class="video-js vjs-theme-fantasy vjs-16-9"
             controls
             preload="auto"
-            poster="thumbnailUrl"
-            fuild="true"
+            fuild
+            liveui
         ></video>
     </div>
 </template>	
 
 <script>
 import videojs from "video.js";
-import resolveUrl from "@videojs/vhs-utils/dist/resolve-url";
+// import resolveUrl from "@videojs/vhs-utils/dist/resolve-url";
 import qualityLevels from "videojs-contrib-quality-levels";
-import hlsQualitySelector from "videojs-hls-quality-selector";
+// import hlsQualitySelector from "videojs-hls-quality-selector";
 require("videojs-hls-quality-selector");
 
 export default {
-    props: ["videoUid", "videoUrl", "thumbnailUrl"],
+    props: ["videoUid", "videoUrl", "posterUrl"],
     data() {
         return {
-            player: null
+            player: null,
+            options: {
+                html5: {
+                    vhs: {
+                        overrideNative: true,
+                        withCredentials: false
+                    },
+                    nativeAudioTracks: false,
+                    nativeVideoTracks: false,
+                    smoothQualityChange: true
+                },
+                poster: this.posterUrl,
+                playbackRates: [0.5, 1, 1.5, 2]
+            }
         };
     },
     mounted() {
-        // videojs.registerPlugin("hls", Hls);
         this.player = videojs("my-video", {
             html5: {
                 vhs: {
@@ -36,24 +48,13 @@ export default {
                 nativeAudioTracks: false,
                 nativeVideoTracks: false,
                 smoothQualityChange: true
-            }
+            },
+            poster: this.posterUrl,
+            playbackRates: [0.5, 1, 1.5, 2]
         });
-        let qualityLevels = this.player.qualityLevels();
-
-        // disable quality levels with less than 720 horizontal lines of resolution when added
-        // to the list.
-        qualityLevels.on("addqualitylevel", function(event) {
-            let qualityLevel = event.qualityLevel;
-
-            if (qualityLevel.height >= 720) {
-                qualityLevel.enabled = true;
-            } else {
-                qualityLevel.enabled = false;
-            }
+        this.player.hlsQualitySelector({
+            displayCurrentQuality: true
         });
-        // this.player.hlsQualitySelector({
-        //     displayCurrentQuality: true
-        // });
         this.player.src({
             src: this.videoUrl,
             type: "application/x-mpegURL",

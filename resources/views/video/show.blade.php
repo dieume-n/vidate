@@ -12,8 +12,7 @@
             @endif
 
             @if($video->isProcessed() && $video->canBeAccessed(Auth::user()))
-            <video-player video-uid="{{ $video->uid }}" video-url="{{ $video->video_url }}"
-                thumbnail-url="{{ $video->getThumbnail() }}">
+            <video-player video-uid="{{ $video->uid }}" video-url="{{ $video->video_url }}">
             </video-player>
             @endif
 

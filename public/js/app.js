@@ -3216,10 +3216,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! video.js */ "./node_modules/video.js/dist/video.es.js");
-/* harmony import */ var _videojs_vhs_utils_dist_resolve_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @videojs/vhs-utils/dist/resolve-url */ "./node_modules/@videojs/vhs-utils/dist/resolve-url.js");
-/* harmony import */ var _videojs_vhs_utils_dist_resolve_url__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_videojs_vhs_utils_dist_resolve_url__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var videojs_contrib_quality_levels__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! videojs-contrib-quality-levels */ "./node_modules/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.es.js");
-/* harmony import */ var videojs_hls_quality_selector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! videojs-hls-quality-selector */ "./node_modules/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.es.js");
+/* harmony import */ var videojs_contrib_quality_levels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! videojs-contrib-quality-levels */ "./node_modules/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.es.js");
 //
 //
 //
@@ -3233,22 +3230,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+ // import resolveUrl from "@videojs/vhs-utils/dist/resolve-url";
 
-
-
-
+ // import hlsQualitySelector from "videojs-hls-quality-selector";
 
 __webpack_require__(/*! videojs-hls-quality-selector */ "./node_modules/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.es.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["videoUid", "videoUrl", "thumbnailUrl"],
+  props: ["videoUid", "videoUrl", "posterUrl"],
   data: function data() {
     return {
-      player: null
+      player: null,
+      options: {
+        html5: {
+          vhs: {
+            overrideNative: true,
+            withCredentials: false
+          },
+          nativeAudioTracks: false,
+          nativeVideoTracks: false,
+          smoothQualityChange: true
+        },
+        poster: this.posterUrl,
+        playbackRates: [0.5, 1, 1.5, 2]
+      }
     };
   },
   mounted: function mounted() {
-    // videojs.registerPlugin("hls", Hls);
     this.player = Object(video_js__WEBPACK_IMPORTED_MODULE_0__["default"])("my-video", {
       html5: {
         vhs: {
@@ -3258,23 +3266,13 @@ __webpack_require__(/*! videojs-hls-quality-selector */ "./node_modules/videojs-
         nativeAudioTracks: false,
         nativeVideoTracks: false,
         smoothQualityChange: true
-      }
+      },
+      poster: this.posterUrl,
+      playbackRates: [0.5, 1, 1.5, 2]
     });
-    var qualityLevels = this.player.qualityLevels(); // disable quality levels with less than 720 horizontal lines of resolution when added
-    // to the list.
-
-    qualityLevels.on("addqualitylevel", function (event) {
-      var qualityLevel = event.qualityLevel;
-
-      if (qualityLevel.height >= 720) {
-        qualityLevel.enabled = true;
-      } else {
-        qualityLevel.enabled = false;
-      }
-    }); // this.player.hlsQualitySelector({
-    //     displayCurrentQuality: true
-    // });
-
+    this.player.hlsQualitySelector({
+      displayCurrentQuality: true
+    });
     this.player.src({
       src: this.videoUrl,
       type: "application/x-mpegURL",
@@ -97272,8 +97270,8 @@ var staticRenderFns = [
           id: "my-video",
           controls: "",
           preload: "auto",
-          poster: "thumbnailUrl",
-          fuild: "true"
+          fuild: "",
+          liveui: ""
         }
       })
     ])
