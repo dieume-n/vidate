@@ -10,6 +10,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/search', 'SearchController@index')->name('search');
 Route::resource('channels', 'ChannelController');
 Route::get('/upload', 'VideoUploadController@index')->name('upload');
 Route::post('/upload', 'VideoUploadController@store')->name('upload.store');
