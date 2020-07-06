@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,3 +14,4 @@ Route::resource('channels', 'ChannelController');
 Route::get('/upload', 'VideoUploadController@index')->name('upload');
 Route::post('/upload', 'VideoUploadController@store')->name('upload.store');
 Route::resource('videos', 'VideoController');
+Route::post('/videos/{video}/views', 'VideoViewController@store')->name('videos.views');

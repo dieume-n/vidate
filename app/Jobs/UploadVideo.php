@@ -33,17 +33,17 @@ class UploadVideo implements ShouldQueue
      */
     public function handle()
     {
-        $path = storage_path().'/app/uploads/'.$this->video->video_filename;
+        $path = storage_path() . '/app/uploads/' . $this->video->video_filename;
 
-        \Cloudder::uploadVideo($path, null,[
+        \Cloudder::uploadVideo($path, null, [
             "folder" => "vidate/videos/",
-            "eager" =>[
+            "eager" => [
                 ["streaming_profile" => "full_hd", "format" => "m3u8"]
             ],
             "eager_async" => true,
-        ] );
+        ]);
         $cloudinary_upload = Cloudder::getResult();
-        if ($cloudinary_upload){
+        if ($cloudinary_upload) {
             Storage::disk('local')->delete("uploads/{$this->video->video_filename}");
         }
 
