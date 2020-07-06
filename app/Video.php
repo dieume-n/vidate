@@ -35,6 +35,11 @@ class Video extends Model
         return $this->belongsTo(Channel::class);
     }
 
+    public function votes()
+    {
+        return $this->morphMany(Vote::class, 'voteable');
+    }
+
     public function scopeLatestFirst($query)
     {
         return $query->orderBy('created_at', 'desc');
@@ -91,5 +96,19 @@ class Video extends Model
     public function viewCount()
     {
         return $this->views->count();
+    }
+
+    public function upVotes()
+    {
+        return $this->votes()->where('type', 'up');
+    }
+    public function downVotes()
+    {
+        return $this->votes()->where('type', 'down');
+    }
+
+    public function voteFromUser(User $user)
+    {
+        return $this->votes()->where('user_id', $user->id);
     }
 }

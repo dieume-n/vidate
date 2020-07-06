@@ -38,7 +38,7 @@
                             <h4>{{ $video->viewCount() }} {{ Str::plural('view', $video->viewCount()) }}</h4>
                         </div>
                         <div>
-                            likes
+                            <video-voting video-uid="{{ $video->uid }}"></video-voting>
                         </div>
                     </div>
                     <div class="media">
