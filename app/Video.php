@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Laravel\Scout\Searchable;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Video extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Searchable;
 
     protected $fillable = [
         'title',

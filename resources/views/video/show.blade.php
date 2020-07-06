@@ -34,7 +34,9 @@
                 <div class="card-body">
                     <h4>{{ $video->title }}</h4>
                     <div class="d-flex justify-content-between mb-2">
-                        <div>video views</div>
+                        <div>
+                            <h4>{{ $video->viewCount() }} {{ Str::plural('view', $video->viewCount()) }}</h4>
+                        </div>
                         <div>
                             likes
                         </div>

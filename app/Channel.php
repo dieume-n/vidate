@@ -2,13 +2,14 @@
 
 namespace App;
 
-use Avatar;
+use Laravolt\Avatar\Avatar;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class Channel extends Model
 {
-    use Sluggable;
+    use Sluggable, Searchable;
 
     /**
      * Return the sluggable configuration array for this model.
