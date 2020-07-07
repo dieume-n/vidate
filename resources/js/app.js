@@ -18,5 +18,5 @@ console.log(moment(new Date()));
 
 const app = new Vue({
     el: '#app',
-    // data: window.vidate ? window.vidate : null
+    data: window.vidate ? window.vidate : null
 });

@@ -36,6 +36,15 @@ class VideoPolicy
             return false;
         }
 
-        return $video->votesAllowed();
+        return true;
+    }
+
+    public function comment(User $user, Video $video)
+    {
+        if (!$video->canBeAccessed()) {
+            return false;
+        }
+
+        return $video->commentsAllowed();
     }
 }

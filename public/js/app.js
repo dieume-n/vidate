@@ -4758,6 +4758,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["videoUid"],
@@ -4766,15 +4775,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      comments: []
+      comments: [],
+      body: null
     };
   },
   methods: {
     getComments: function getComments() {
       var _this = this;
 
-      axios.get("/videos/".concat(this.videoUid, "/comments")).then(function (res) {
-        _this.comments = res.data.data;
+      axios.get("/videos/".concat(this.videoUid, "/comments")).then(function (response) {
+        _this.comments = response.data.data;
+      });
+    },
+    createComment: function createComment() {
+      var _this2 = this;
+
+      axios.post("/videos/".concat(this.videoUid, "/comments"), {
+        body: this.body
+      }).then(function (response) {
+        _this2.comments.unshift(response.data.data);
+
+        _this2.body = null;
       });
     }
   },
@@ -11560,7 +11581,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\na[data-v-7f1367b4]:hover {\r\n  text-decoration: none;\n}\r\n", ""]);
+exports.push([module.i, "\na[data-v-7f1367b4]:hover {\r\n    text-decoration: none;\n}\r\n", ""]);
 
 // exports
 
@@ -120207,8 +120228,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "card mt-2" }, [
-      _c("div", { staticClass: "card-header" }, [
+    _c("div", { staticClass: "card card-body mt-3" }, [
+      _c("div", [
         _vm._v(
           _vm._s(_vm.comments.length) +
             " " +
@@ -120216,109 +120237,147 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c(
-          "ul",
-          { staticClass: "list-unstyled" },
-          _vm._l(_vm.comments, function(comment, index) {
-            return _c("li", { key: index, staticClass: "media mb-3" }, [
-              _c(
-                "a",
-                { attrs: { href: comment.channel.link, target: "_blank" } },
-                [
-                  _c("vue-avatar", {
-                    staticClass: "mr-3 text-white",
-                    attrs: {
-                      username: comment.channel.name,
-                      scr: comment.channel.image,
-                      "border-radius": 5
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "media-body" }, [
-                _c("a", { attrs: { href: comment.channel.link } }, [
-                  _c("h5", { staticClass: "mt-0 mb-1" }, [
+      _vm.$root.user.authenticated
+        ? _c("div", { staticClass: "my-3" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.body,
+                  expression: "body"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { placeholder: "Say something..." },
+              domProps: { value: _vm.body },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.body = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "float-right btn btn-outline-info mt-2",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.createComment($event)
+                  }
+                }
+              },
+              [_vm._v("Post")]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "list-unstyled mt-4" },
+        _vm._l(_vm.comments, function(comment, index) {
+          return _c("li", { key: index, staticClass: "media mb-3" }, [
+            _c(
+              "a",
+              { attrs: { href: comment.channel.link, target: "_blank" } },
+              [
+                _c("vue-avatar", {
+                  staticClass: "mr-3 text-white",
+                  attrs: {
+                    username: comment.channel.name,
+                    scr: comment.channel.image,
+                    "border-radius": 5
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "media-body" }, [
+              _c("a", { attrs: { href: comment.channel.link } }, [
+                _c("h5", { staticClass: "mt-0 mb-1" }, [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(comment.channel.name) +
+                      "  \n                            "
+                  ),
+                  _c("small", { staticClass: "text-muted" }, [
+                    _c("i", { staticClass: "far fa-clock" }),
                     _vm._v(
-                      "\n                " +
-                        _vm._s(comment.channel.name) +
-                        "  \n                "
-                    ),
-                    _c("small", { staticClass: "text-muted" }, [
-                      _c("i", { staticClass: "far fa-clock" }),
-                      _vm._v(
-                        "\n                   " +
-                          _vm._s(_vm._f("fromNow")(comment.created_at)) +
-                          "\n                "
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(comment.body))]),
-                _vm._v(" "),
-                comment.replies.length != 0
-                  ? _c(
-                      "div",
-                      _vm._l(comment.replies, function(reply, index) {
-                        return _c("div", { key: index, staticClass: "media" }, [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: reply.channel.link,
-                                target: "_blank"
-                              }
-                            },
-                            [
-                              _c("vue-avatar", {
-                                staticClass: "mr-3 text-white",
-                                attrs: {
-                                  username: reply.channel.name,
-                                  scr: reply.channel.image,
-                                  "border-radius": 5
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "media-body" }, [
-                            _c("a", { attrs: { href: reply.channel.link } }, [
-                              _c("h5", { staticClass: "mt-0 mb-1" }, [
-                                _vm._v(
-                                  "\n                      " +
-                                    _vm._s(reply.channel.name) +
-                                    "  \n                      "
-                                ),
-                                _c("small", { staticClass: "text-muted" }, [
-                                  _c("i", { staticClass: "far fa-clock" }),
-                                  _vm._v(
-                                    "\n                         " +
-                                      _vm._s(
-                                        _vm._f("fromNow")(reply.created_at)
-                                      ) +
-                                      "\n                      "
-                                  )
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("p", [_vm._v(_vm._s(reply.body))])
-                          ])
-                        ])
-                      }),
-                      0
+                      "\n                                 " +
+                        _vm._s(_vm._f("fromNow")(comment.created_at)) +
+                        "\n                            "
                     )
-                  : _vm._e()
-              ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(comment.body))]),
+              _vm._v(" "),
+              comment.replies.length != 0
+                ? _c(
+                    "div",
+                    _vm._l(comment.replies, function(reply, index) {
+                      return _c("div", { key: index, staticClass: "media" }, [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: reply.channel.link,
+                              target: "_blank"
+                            }
+                          },
+                          [
+                            _c("vue-avatar", {
+                              staticClass: "mr-3 text-white",
+                              attrs: {
+                                username: reply.channel.name,
+                                scr: reply.channel.image,
+                                "border-radius": 5
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "media-body" }, [
+                          _c("a", { attrs: { href: reply.channel.link } }, [
+                            _c("h5", { staticClass: "mt-0 mb-1" }, [
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(reply.channel.name) +
+                                  "  \n                                        "
+                              ),
+                              _c("small", { staticClass: "text-muted" }, [
+                                _c("i", { staticClass: "far fa-clock" }),
+                                _vm._v(
+                                  "\n                                             " +
+                                    _vm._s(
+                                      _vm._f("fromNow")(reply.created_at)
+                                    ) +
+                                    "\n                                        "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(reply.body))])
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                : _vm._e()
             ])
-          }),
-          0
-        )
-      ])
+          ])
+        }),
+        0
+      )
     ])
   ])
 }
@@ -135030,8 +135089,8 @@ Vue.filter('pluralize', function (value) {
 });
 console.log(moment__WEBPACK_IMPORTED_MODULE_0___default()(new Date()));
 var app = new Vue({
-  el: '#app' // data: window.vidate ? window.vidate : null
-
+  el: '#app',
+  data: window.vidate ? window.vidate : null
 });
 
 /***/ }),

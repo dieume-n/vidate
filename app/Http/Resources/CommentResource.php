@@ -21,7 +21,6 @@ class CommentResource extends JsonResource
             'created_at' => $this->created_at,
             'channel' => new ChannelResource($this->user->channel),
             'replies' => RepliesResource::collection($this->replies)
-
         ];
     }
 }
