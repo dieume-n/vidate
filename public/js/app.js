@@ -3497,17 +3497,45 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    vote: function vote() {}
-  },
-  mounted: function mounted() {
-    var _this = this;
+    getVotes: function getVotes() {
+      var _this = this;
 
-    axios.get("/videos/".concat(this.videoUid, "/votes")).then(function (response) {
-      _this.up = response.data.data.up;
-      _this.down = response.data.data.down;
-      _this.canVote = response.data.data.can_vote;
-      _this.userVote = response.data.data.user_vote;
-    });
+      axios.get("/videos/".concat(this.videoUid, "/votes")).then(function (response) {
+        _this.up = response.data.data.up;
+        _this.down = response.data.data.down;
+        _this.canVote = response.data.data.can_vote;
+        _this.userVote = response.data.data.user_vote;
+      });
+    },
+    vote: function vote(type) {
+      if (this.userVote == type) {
+        this[type]--;
+        this.userVote = null;
+        this.deleteVote(type);
+        return;
+      }
+
+      if (this.userVote) {
+        this[type == "up" ? "down" : "up"]--;
+      }
+
+      this[type]++;
+      this.userVote = type;
+      this.createVote(type);
+    },
+    deleteVote: function deleteVote(type) {
+      axios["delete"]("/videos/".concat(this.videoUid, "/votes"));
+    },
+    createVote: function createVote(type) {
+      axios.post("/videos/".concat(this.videoUid, "/votes"), {
+        type: type
+      }).then(function (res) {
+        console.log(res.data);
+      });
+    }
+  },
+  created: function created() {
+    this.getVotes();
   }
 });
 
@@ -97611,23 +97639,47 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("ul", { staticClass: "list-inline" }, [
-      _c("li", { staticClass: "list-inline-item" }, [
-        _c("a", { class: { disabled: !_vm.canVote }, attrs: { href: "#" } }, [
-          _vm.userVote == "up"
-            ? _c("i", { staticClass: "fas fa-thumbs-up" })
-            : _c("i", { staticClass: "far fa-thumbs-up" })
-        ]),
-        _vm._v("\n      " + _vm._s(_vm.up) + "\n    ")
-      ]),
+      _c(
+        "li",
+        {
+          staticClass: "list-inline-item",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.vote("up")
+            }
+          }
+        },
+        [
+          _c("a", { class: { disabled: !_vm.canVote }, attrs: { href: "#" } }, [
+            _vm.userVote == "up"
+              ? _c("i", { staticClass: "fas fa-thumbs-up" })
+              : _c("i", { staticClass: "far fa-thumbs-up" })
+          ]),
+          _vm._v("\n      " + _vm._s(_vm.up) + "\n    ")
+        ]
+      ),
       _vm._v(" \n    "),
-      _c("li", { staticClass: "list-inline-item" }, [
-        _c("a", { class: { disabled: !_vm.canVote }, attrs: { href: "#" } }, [
-          _vm.userVote == "down"
-            ? _c("i", { staticClass: "fas fa-thumbs-down" })
-            : _c("i", { staticClass: "far fa-thumbs-down" })
-        ]),
-        _vm._v("\n      " + _vm._s(_vm.down) + "\n    ")
-      ])
+      _c(
+        "li",
+        {
+          staticClass: "list-inline-item",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.vote("down")
+            }
+          }
+        },
+        [
+          _c("a", { class: { disabled: !_vm.canVote }, attrs: { href: "#" } }, [
+            _vm.userVote == "down"
+              ? _c("i", { staticClass: "fas fa-thumbs-down" })
+              : _c("i", { staticClass: "far fa-thumbs-down" })
+          ]),
+          _vm._v("\n      " + _vm._s(_vm.down) + "\n    ")
+        ]
+      )
     ])
   ])
 }
