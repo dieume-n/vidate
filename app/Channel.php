@@ -49,6 +49,10 @@ class Channel extends Model
 
     public function getImage()
     {
-        return $this->image_file ? $this->image_file : Avatar::create(ucwords($this->name))->toBase64();
+        return $this->image_file ? $this->image_file : null;
+    }
+    public function getLinkAttribute()
+    {
+        return asset("channels/$this->slug");
     }
 }

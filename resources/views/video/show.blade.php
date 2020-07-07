@@ -48,7 +48,8 @@
                                 <img src="{{ $video->$channel->image_file }}" style="width: 40px; height: 40px"
                                     alt="{{ $video->channel->slug }}" />
                                 @else
-                                {!! Avatar::create($video->channel->name)->setFontSize(20)->setDimension(40)->toSvg()
+                                {!!
+                                Avatar::create($video->channel->name)->setFontSize(20)->setDimension(50)->setShape('square')->toSvg()
                                 !!}
                                 @endif
                             </a>
@@ -76,13 +77,13 @@
 
 
             </div>
-            @if($video->description)
-            <div class="card">
-                <div class="card-body">
-                    {!! nl2br(e($video->description)) !!}
-                </div>
-            </div>
+            @if($video->commentsAllowed())
+            <video-comments video-uid="{{ $video->uid }}"></video-comments>
+            @else
+            <h4 class="mt-3 ml-3">Comment are blocked on this video</h4>
             @endif
+
+
         </div>
     </div>
 </div>

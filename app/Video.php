@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\Orderable;
 use Laravel\Scout\Searchable;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Video extends Model
 {
-    use SoftDeletes, Searchable;
+    use SoftDeletes, Searchable, Orderable;
 
     protected $fillable = [
         'title',
@@ -40,9 +41,9 @@ class Video extends Model
         return $this->morphMany(Vote::class, 'voteable');
     }
 
-    public function scopeLatestFirst($query)
+    public function comments()
     {
-        return $query->orderBy('created_at', 'desc');
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('reply_id');
     }
 
     public function getThumbnail()
