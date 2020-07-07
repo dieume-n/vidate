@@ -31,6 +31,25 @@
                             </h5>
                         </a>
                         <p>{{ comment.body }}</p>
+
+                        <ul class="list-inline my-0">
+                            <li class="list-inline-item" v-if="$root.user.authenticated">
+                                <a
+                                    href="#"
+                                    @click.prevent="toggleReplyForm(comment.id)"
+                                >{{ replyFormVisible === comment.id ? 'Cancel' : 'Reply'}}</a>
+                            </li>
+                        </ul>
+
+                        <div class="my-2" v-if="replyFormVisible === comment.id ">
+                            <textarea v-model="replyBody" class="form-control"></textarea>
+                            <button
+                                class="float-right btn btn-outline-info mt-2"
+                                @click.prevent="createReply(comment.id)"
+                            >Reply</button>
+                        </div>
+
+                        <!-- Show replies -->
                         <div v-if="comment.replies.length != 0">
                             <div
                                 class="media"
@@ -75,7 +94,9 @@ export default {
     data() {
         return {
             comments: [],
-            body: null
+            body: null,
+            replyBody: null,
+            replyFormVisible: null
         };
     },
     methods: {
@@ -92,6 +113,35 @@ export default {
                 .then(response => {
                     this.comments.unshift(response.data.data);
                     this.body = null;
+                });
+        },
+        toggleReplyForm(commentId) {
+            this.replyBody = null;
+
+            if (this.replyFormVisible === commentId) {
+                this.replyFormVisible = null;
+                return;
+            }
+
+            this.replyFormVisible = commentId;
+        },
+
+        createReply(commentId) {
+            axios
+                .post(`/videos/${this.videoUid}/comments`, {
+                    body: this.replyBody,
+                    reply_id: commentId
+                })
+                .then(response => {
+                    this.comments.map((comment, index) => {
+                        if (comment.id === commentId) {
+                            this.comments[index].replies.push(
+                                response.data.data
+                            );
+                        }
+                    });
+                    this.replyBody = null;
+                    this.replyFormVisible = null;
                 });
         }
     },
