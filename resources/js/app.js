@@ -14,8 +14,6 @@ Vue.component('video-comments', require('./components/VideoComments.vue').defaul
 Vue.filter('fromNow', value => moment(value).fromNow());
 Vue.filter('pluralize', value => value > 1 ? 'comments' : 'comment')
 
-console.log(moment(new Date()));
-
 const app = new Vue({
     el: '#app',
     data: window.vidate ? window.vidate : null

@@ -135303,7 +135303,6 @@ Vue.filter('fromNow', function (value) {
 Vue.filter('pluralize', function (value) {
   return value > 1 ? 'comments' : 'comment';
 });
-console.log(moment__WEBPACK_IMPORTED_MODULE_0___default()(new Date()));
 var app = new Vue({
   el: '#app',
   data: window.vidate ? window.vidate : null
