@@ -4786,6 +4786,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["videoUid"],
@@ -4845,9 +4872,35 @@ __webpack_require__.r(__webpack_exports__);
         _this3.replyBody = null;
         _this3.replyFormVisible = null;
       });
+    },
+    deleteComment: function deleteComment(commentId) {
+      if (!confirm("Are you sure you want to delete this comment?")) {
+        return;
+      }
+
+      this.deleteById(commentId);
+      axios["delete"]("/videos/".concat(this.videoUid, "/comments/").concat(commentId));
+    },
+    deleteById: function deleteById(commentId) {
+      var _this4 = this;
+
+      this.comments.map(function (comment, index) {
+        if (comment.id === commentId) {
+          _this4.comments.splice(index, 1);
+
+          return;
+        }
+
+        comment.replies.map(function (reply, replyIndex) {
+          if (reply.id === commentId) {
+            _this4.comments[index].replies.splice(replyIndex, 1);
+
+            return;
+          }
+        });
+      });
     }
   },
-  created: function created() {},
   mounted: function mounted() {
     this.getComments();
   }
@@ -120327,9 +120380,9 @@ var render = function() {
       _vm._v(" "),
       _c(
         "ul",
-        { staticClass: "list-unstyled mt-4" },
+        { staticClass: "list-unstyled d-block" },
         _vm._l(_vm.comments, function(comment, index) {
-          return _c("li", { key: index, staticClass: "media mb-3" }, [
+          return _c("li", { key: index, staticClass: "media" }, [
             _c(
               "a",
               { attrs: { href: comment.channel.link, target: "_blank" } },
@@ -120347,22 +120400,45 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "media-body" }, [
-              _c("a", { attrs: { href: comment.channel.link } }, [
-                _c("h5", { staticClass: "mt-0 mb-1" }, [
-                  _vm._v(
-                    "\n                            " +
-                      _vm._s(comment.channel.name) +
-                      "  \n                            "
-                  ),
-                  _c("small", { staticClass: "text-muted" }, [
-                    _c("i", { staticClass: "far fa-clock" }),
-                    _vm._v(
-                      "\n                                 " +
-                        _vm._s(_vm._f("fromNow")(comment.created_at)) +
-                        "\n                            "
-                    )
+              _c("ul", { staticClass: "list-inline my-0" }, [
+                _c("li", { staticClass: "list-inline-item" }, [
+                  _c("a", { attrs: { href: comment.channel.link } }, [
+                    _c("h5", { staticClass: "mt-0 mb-1" }, [
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(comment.channel.name) +
+                          "  \n                                    "
+                      ),
+                      _c("small", { staticClass: "text-muted" }, [
+                        _c("i", { staticClass: "far fa-clock" }),
+                        _vm._v(
+                          "\n                                         " +
+                            _vm._s(_vm._f("fromNow")(comment.created_at)) +
+                            "\n                                    "
+                        )
+                      ])
+                    ])
                   ])
-                ])
+                ]),
+                _vm._v(" "),
+                _vm.$root.user.id === comment.user_id
+                  ? _c("li", { staticClass: "list-inline-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "text-danger",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.deleteComment(comment.id)
+                            }
+                          }
+                        },
+                        [_vm._v("Delete")]
+                      )
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("p", [_vm._v(_vm._s(comment.body))]),
@@ -120396,7 +120472,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _vm.replyFormVisible === comment.id
-                ? _c("div", { staticClass: "my-2" }, [
+                ? _c("div", { staticClass: "my-3" }, [
                     _c("textarea", {
                       directives: [
                         {
@@ -120421,7 +120497,8 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "float-right btn btn-outline-info mt-2",
+                        staticClass:
+                          "float-right d-block btn btn-outline-info mt-2",
                         on: {
                           click: function($event) {
                             $event.preventDefault()
@@ -120437,6 +120514,7 @@ var render = function() {
               comment.replies.length != 0
                 ? _c(
                     "div",
+                    { staticClass: "mt-3" },
                     _vm._l(comment.replies, function(reply, index) {
                       return _c("div", { key: index, staticClass: "media" }, [
                         _c(
@@ -120461,24 +120539,47 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "media-body" }, [
-                          _c("a", { attrs: { href: reply.channel.link } }, [
-                            _c("h5", { staticClass: "mt-0 mb-1" }, [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(reply.channel.name) +
-                                  "  \n                                        "
-                              ),
-                              _c("small", { staticClass: "text-muted" }, [
-                                _c("i", { staticClass: "far fa-clock" }),
-                                _vm._v(
-                                  "\n                                             " +
-                                    _vm._s(
-                                      _vm._f("fromNow")(reply.created_at)
-                                    ) +
-                                    "\n                                        "
-                                )
+                          _c("ul", { staticClass: "list-inline" }, [
+                            _c("li", { staticClass: "list-inline-item" }, [
+                              _c("a", { attrs: { href: reply.channel.link } }, [
+                                _c("h5", { staticClass: "mt-0 mb-1" }, [
+                                  _vm._v(
+                                    "\n                                                " +
+                                      _vm._s(reply.channel.name) +
+                                      "  \n                                                "
+                                  ),
+                                  _c("small", { staticClass: "text-muted" }, [
+                                    _c("i", { staticClass: "far fa-clock" }),
+                                    _vm._v(
+                                      "\n                                                     " +
+                                        _vm._s(
+                                          _vm._f("fromNow")(reply.created_at)
+                                        ) +
+                                        "\n                                                "
+                                    )
+                                  ])
+                                ])
                               ])
-                            ])
+                            ]),
+                            _vm._v(" "),
+                            _vm.$root.user.id === reply.user_id
+                              ? _c("li", { staticClass: "list-inline-item" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "text-danger",
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.deleteComment(reply.id)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Delete")]
+                                  )
+                                ])
+                              : _vm._e()
                           ]),
                           _vm._v(" "),
                           _c("p", [_vm._v(_vm._s(reply.body))])

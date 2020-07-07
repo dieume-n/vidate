@@ -9,8 +9,8 @@
                     @click.prevent="createComment"
                 >Post</button>
             </div>
-            <ul class="list-unstyled mt-4">
-                <li class="media mb-3" v-for="(comment, index) in comments" :key="index">
+            <ul class="list-unstyled d-block">
+                <li class="media" v-for="(comment, index) in comments" :key="index">
                     <a :href="comment.channel.link" target="_blank">
                         <vue-avatar
                             :username="comment.channel.name"
@@ -21,15 +21,26 @@
                     </a>
 
                     <div class="media-body">
-                        <a :href="comment.channel.link">
-                            <h5 class="mt-0 mb-1">
-                                {{comment.channel.name }} &nbsp;
-                                <small class="text-muted">
-                                    <i class="far fa-clock"></i>
-                                    &nbsp;{{ comment.created_at|fromNow }}
-                                </small>
-                            </h5>
-                        </a>
+                        <ul class="list-inline my-0">
+                            <li class="list-inline-item">
+                                <a :href="comment.channel.link">
+                                    <h5 class="mt-0 mb-1">
+                                        {{comment.channel.name }} &nbsp;
+                                        <small class="text-muted">
+                                            <i class="far fa-clock"></i>
+                                            &nbsp;{{ comment.created_at|fromNow }}
+                                        </small>
+                                    </h5>
+                                </a>
+                            </li>
+                            <li class="list-inline-item" v-if="$root.user.id === comment.user_id">
+                                <a
+                                    href="#"
+                                    @click.prevent="deleteComment(comment.id)"
+                                    class="text-danger"
+                                >Delete</a>
+                            </li>
+                        </ul>
                         <p>{{ comment.body }}</p>
 
                         <ul class="list-inline my-0">
@@ -41,16 +52,16 @@
                             </li>
                         </ul>
 
-                        <div class="my-2" v-if="replyFormVisible === comment.id ">
+                        <div class="my-3" v-if="replyFormVisible === comment.id ">
                             <textarea v-model="replyBody" class="form-control"></textarea>
                             <button
-                                class="float-right btn btn-outline-info mt-2"
+                                class="float-right d-block btn btn-outline-info mt-2"
                                 @click.prevent="createReply(comment.id)"
                             >Reply</button>
                         </div>
 
                         <!-- Show replies -->
-                        <div v-if="comment.replies.length != 0">
+                        <div v-if="comment.replies.length != 0" class="mt-3">
                             <div
                                 class="media"
                                 v-for="(reply, index) in comment.replies"
@@ -65,15 +76,31 @@
                                     ></vue-avatar>
                                 </a>
                                 <div class="media-body">
-                                    <a :href="reply.channel.link">
-                                        <h5 class="mt-0 mb-1">
-                                            {{reply.channel.name }} &nbsp;
-                                            <small class="text-muted">
-                                                <i class="far fa-clock"></i>
-                                                &nbsp;{{ reply.created_at|fromNow }}
-                                            </small>
-                                        </h5>
-                                    </a>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a :href="reply.channel.link">
+                                                <h5 class="mt-0 mb-1">
+                                                    {{reply.channel.name }} &nbsp;
+                                                    <small
+                                                        class="text-muted"
+                                                    >
+                                                        <i class="far fa-clock"></i>
+                                                        &nbsp;{{ reply.created_at|fromNow }}
+                                                    </small>
+                                                </h5>
+                                            </a>
+                                        </li>
+                                        <li
+                                            class="list-inline-item"
+                                            v-if="$root.user.id === reply.user_id"
+                                        >
+                                            <a
+                                                href="#"
+                                                @click.prevent="deleteComment(reply.id)"
+                                                class="text-danger"
+                                            >Delete</a>
+                                        </li>
+                                    </ul>
                                     <p>{{ reply.body }}</p>
                                 </div>
                             </div>
@@ -143,9 +170,31 @@ export default {
                     this.replyBody = null;
                     this.replyFormVisible = null;
                 });
+        },
+        deleteComment(commentId) {
+            if (!confirm("Are you sure you want to delete this comment?")) {
+                return;
+            }
+            this.deleteById(commentId);
+
+            axios.delete(`/videos/${this.videoUid}/comments/${commentId}`);
+        },
+        deleteById(commentId) {
+            this.comments.map((comment, index) => {
+                if (comment.id === commentId) {
+                    this.comments.splice(index, 1);
+                    return;
+                }
+
+                comment.replies.map((reply, replyIndex) => {
+                    if (reply.id === commentId) {
+                        this.comments[index].replies.splice(replyIndex, 1);
+                        return;
+                    }
+                });
+            });
         }
     },
-    created() {},
     mounted() {
         this.getComments();
     }

@@ -21,3 +21,4 @@ Route::post('/videos/{video}/votes', 'VideoVoteController@create')->name('videos
 Route::delete('/videos/{video}/votes', 'VideoVoteController@remove')->name('videos.votes.delete');
 Route::get('/videos/{video}/comments', 'VideoCommentController@index')->name('videos.comments.index');
 Route::post('/videos/{video}/comments', 'VideoCommentController@create')->name('videos.comments.create');
+Route::delete('/videos/{video}/comments/{comment}', 'VideoCommentController@delete')->name('videos.comments.delete');
