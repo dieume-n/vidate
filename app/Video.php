@@ -112,4 +112,19 @@ class Video extends Model
     {
         return $this->votes()->where('user_id', $user->id);
     }
+
+    public function scopeProcessed($query)
+    {
+        return $query->where('processed', true);
+    }
+
+    public function scopePublic($query)
+    {
+        return $query->where('visibility', 'public');
+    }
+
+    public function scopeVisible($query)
+    {
+        return $query->processed()->public();
+    }
 }
