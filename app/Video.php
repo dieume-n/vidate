@@ -71,6 +71,11 @@ class Video extends Model
         return $this->visibility === 'private';
     }
 
+    public function isPublic()
+    {
+        return $this->visibility === 'public';
+    }
+
     public function ownedByUser(User $user)
     {
         return $this->channel->user->id === $user->id;
@@ -126,5 +131,13 @@ class Video extends Model
     public function scopeVisible($query)
     {
         return $query->processed()->public();
+    }
+
+    public function toSearchableArray()
+    {
+        $properties = $this->toArray();
+        $properties['visible'] = $this->isProcessed() && $this->isPublic();
+
+        return $properties;
     }
 }
