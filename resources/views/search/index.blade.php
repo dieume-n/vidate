@@ -27,10 +27,13 @@
                                         {{ $channel->name }}
                                     </a>
                                 </h5>
-                                Subscription count...
+                                {{ $channel->subscriptionCount() }}
+                                {{ Str::plural('subscriber', $channel->subscriptionCount())}}
+
 
                             </div>
                         </div>
+                        <hr>
                         @endforeach
 
                     </div>

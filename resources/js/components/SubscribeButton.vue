@@ -26,7 +26,6 @@ export default {
     methods: {
         handle() {
             if (!this.$root.user.authenticated) {
-                console.log("not authentica");
                 window.location.href = `${this.$root.url}/login`;
                 return;
             }

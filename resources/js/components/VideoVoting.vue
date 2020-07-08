@@ -39,6 +39,11 @@ export default {
             });
         },
         vote(type) {
+            if (!this.$root.user.authenticated) {
+                window.location.href = `${this.$root.url}/login`;
+                return;
+            }
+
             if (this.userVote == type) {
                 this[type]--;
                 this.userVote = null;
