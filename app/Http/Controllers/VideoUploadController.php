@@ -37,7 +37,7 @@ class VideoUploadController extends Controller
     public function validateVideo()
     {
         return request()->validate([
-            'video' => 'required|mimetype:video',
+            'video' => 'required',
             'uid' => 'required',
         ]);
     }
