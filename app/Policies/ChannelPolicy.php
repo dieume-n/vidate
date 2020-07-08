@@ -47,38 +47,26 @@ class ChannelPolicy
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Determine whether the user can subscribe the model.
      *
      * @param  \App\User  $user
      * @param  \App\Channel  $channel
      * @return mixed
      */
-    public function delete(User $user, Channel $channel)
+    public function subscribe(User $user, Channel $channel)
     {
-        //
+        return !$user->ownsChannel($channel);
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can unsubscribe the model.
      *
      * @param  \App\User  $user
      * @param  \App\Channel  $channel
      * @return mixed
      */
-    public function restore(User $user, Channel $channel)
+    public function unsubscribe(User $user, Channel $channel)
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Channel  $channel
-     * @return mixed
-     */
-    public function forceDelete(User $user, Channel $channel)
-    {
-        //
+        return $user->isSubscribedTo($channel);
     }
 }

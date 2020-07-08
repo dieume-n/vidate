@@ -1,15 +1,15 @@
 <template>
     <div>
         <div class="card card-body mt-3">
-            <div>{{ comments.length }} {{ comments.length | pluralize }}</div>
-            <div class="my-3" v-if="$root.user.authenticated">
+            <div class="mb-3">{{ comments.length }} {{ 'comment' | pluralize(comments.length) }}</div>
+            <div v-if="$root.user.authenticated">
                 <textarea v-model="body" class="form-control" placeholder="Say something..."></textarea>
                 <button
                     class="float-right btn btn-outline-info mt-2"
                     @click.prevent="createComment"
                 >Post</button>
             </div>
-            <ul class="list-unstyled d-block">
+            <ul class="list-unstyled d-block mt-3">
                 <li class="media" v-for="(comment, index) in comments" :key="index">
                     <a :href="comment.channel.link" target="_blank">
                         <vue-avatar

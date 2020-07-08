@@ -55,16 +55,13 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <div class="mt-0 d-flex justify-content-between">
-                                <h5 class="mt-2">
-                                    <a href="{{ route('channels.show', $video->channel->slug) }}" class="media-heading">
-                                        {{ $video->channel->name }}
-                                    </a>
-                                </h5>
-                                <div>
-                                    <button class="btn btn-danger" type="button">Subscribe</button>
-                                </div>
-                            </div>
+                            <h5 class="mt-0">
+                                <a href="{{ route('channels.show', $video->channel->slug) }}" class="media-heading">
+                                    {{ $video->channel->name }}
+                                </a>
+                            </h5>
+                            <subscribe-button channel-slug="{{ $video->channel->slug }}"></subscribe-button>
+
 
                             @if($video->description)
                             <div class="mt-3 video-description__line_height">

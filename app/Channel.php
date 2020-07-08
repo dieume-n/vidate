@@ -55,4 +55,14 @@ class Channel extends Model
     {
         return asset("channels/$this->slug");
     }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function subscriptionCount()
+    {
+        return $this->subscriptions->count();
+    }
 }

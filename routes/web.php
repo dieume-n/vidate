@@ -22,3 +22,6 @@ Route::delete('/videos/{video}/votes', 'VideoVoteController@remove')->name('vide
 Route::get('/videos/{video}/comments', 'VideoCommentController@index')->name('videos.comments.index');
 Route::post('/videos/{video}/comments', 'VideoCommentController@create')->name('videos.comments.create');
 Route::delete('/videos/{video}/comments/{comment}', 'VideoCommentController@delete')->name('videos.comments.delete');
+Route::get('/subscriptions/{channel}', 'ChannelSubscriptionController@show')->name('subscriptions.show');
+Route::post('/subscriptions/{channel}', 'ChannelSubscriptionController@create')->name('subscriptions.create');
+Route::delete('/subscriptions/{channel}', 'ChannelSubscriptionController@delete')->name('subscriptions.delete');

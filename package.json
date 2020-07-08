@@ -29,6 +29,7 @@
         "@videojs/http-streaming": "^1.13.3",
         "@videojs/themes": "^1.0.0",
         "moment": "^2.27.0",
+        "pluralize": "^8.0.0",
         "videojs-hls-quality-selector": "^1.1.1"
     }
 }
