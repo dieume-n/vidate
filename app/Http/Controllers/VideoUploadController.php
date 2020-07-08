@@ -24,21 +24,20 @@ class VideoUploadController extends Controller
         $channel = $request->user()->channel;
         $video = $channel->videos()->where('uid', $request->uid)->firstOrFail();
 
-        if($request->file('video')){
+        if ($request->file('video')) {
 
             $request->file('video')->storeAs('uploads', $video->video_filename);
-            
+
             $this->dispatch(new UploadVideo($video));
         }
 
         return response()->json([], 200);
-        
     }
 
     public function validateVideo()
     {
         return request()->validate([
-            'video'=> 'required:video',
+            'video' => 'required|mimetype:video',
             'uid' => 'required',
         ]);
     }
