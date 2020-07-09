@@ -34,15 +34,6 @@ class UploadVideo implements ShouldQueue
     public function handle()
     {
         $path = public_path('uploads') . '/videos/' . $this->video->video_filename;
-
-        if (is_readable(public_path('uploads') . '/videos/' . $this->video->video_filename)) {
-            dd("file is readable");
-        } else {
-            echo  public_path('uploads') . '/videos/' . $this->video->video_filename;
-            dd('cannot be read');
-        }
-
-        return;
         // dd($path);
 
         // if (file_exists(public_path('uploads') . '/videos/' . $this->video->video_filename)) {
