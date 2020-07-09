@@ -39,6 +39,11 @@
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "heroku": {
+            "compile": [
+                "chmod -R 777 /app/public/uploads"
+            ]
         }
     },
     "autoload": {
