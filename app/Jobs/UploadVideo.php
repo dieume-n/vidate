@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
-use Storage;
 use Illuminate\Bus\Queueable;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -33,9 +33,9 @@ class UploadVideo implements ShouldQueue
      */
     public function handle()
     {
-        $path = storage_path() . '/app/uploads/' . $this->video->video_filename;
+        $path = public_path('uploads') . '/videos/' . $this->video->video_filename;
 
-        \Cloudder::uploadVideo($path, null, [
+        Cloudder::uploadVideo($path, null, [
             "folder" => "vidate/videos/",
             "eager" => [
                 ["streaming_profile" => "full_hd", "format" => "m3u8"]
@@ -44,7 +44,7 @@ class UploadVideo implements ShouldQueue
         ]);
         $cloudinary_upload = Cloudder::getResult();
         if ($cloudinary_upload) {
-            Storage::disk('local')->delete("uploads/{$this->video->video_filename}");
+            Storage::disk('uploads')->delete("videos/{$this->video->video_filename}");
         }
 
         $this->video->video_public_id = $cloudinary_upload['public_id'];
