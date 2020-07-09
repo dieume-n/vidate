@@ -1,1 +1,1 @@
-chmod -R 777 public
+chmod -R 777 /app/public

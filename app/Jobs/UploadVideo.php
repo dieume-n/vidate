@@ -35,14 +35,14 @@ class UploadVideo implements ShouldQueue
     {
         $path = public_path('uploads') . '/videos/' . $this->video->video_filename;
 
-        dd($path);
+        // dd($path);
 
-        if (file_exists(public_path('uploads') . '/videos/' . $this->video->video_filename)) {
-            dd($path);
-        } else {
-            dd('no file found');
-        }
-        return;
+        // if (file_exists(public_path('uploads') . '/videos/' . $this->video->video_filename)) {
+        //     dd($path);
+        // } else {
+        //     dd('no file found');
+        // }
+        // return;
 
         Cloudder::uploadVideo($path, null, [
             "folder" => "vidate/videos/",
