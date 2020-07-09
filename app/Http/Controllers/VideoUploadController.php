@@ -25,7 +25,8 @@ class VideoUploadController extends Controller
         $video = $channel->videos()->where('uid', $request->uid)->firstOrFail();
 
         if ($request->file('video')) {
-            $request->file('video')->storeAs('videos', $video->video_filename, ['disk' => 'uploads']);
+            $request->file('video')->storeAs('uploads', $video->video_filename);
+            // $request->file('video')->storeAs('videos', $video->video_filename, ['disk' => 'uploads']);
             $this->dispatch(new UploadVideo($video));
         }
 

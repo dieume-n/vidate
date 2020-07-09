@@ -1,1 +1,1 @@
-chmod -R 777 /app/public/
+chmod -R 777 storage

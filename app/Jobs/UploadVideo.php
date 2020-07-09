@@ -33,15 +33,8 @@ class UploadVideo implements ShouldQueue
      */
     public function handle()
     {
-        $path = public_path('uploads') . '/videos/' . $this->video->video_filename;
-        // dd($path);
-
-        // if (file_exists(public_path('uploads') . '/videos/' . $this->video->video_filename)) {
-        //     dd($path);
-        // } else {
-        //     dd('no file found');
-        // }
-        // return;
+        // $path = public_path('uploads') . '/videos/' . $this->video->video_filename;
+        $path = storage_path() . '/app/uploads/' . $this->video->video_filename;
 
         Cloudder::uploadVideo($path, null, [
             "folder" => "vidate/videos/",
@@ -52,7 +45,8 @@ class UploadVideo implements ShouldQueue
         ]);
         $cloudinary_upload = Cloudder::getResult();
         if ($cloudinary_upload) {
-            Storage::disk('uploads')->delete("videos/{$this->video->video_filename}");
+            Storage::disk('local')->delete("uploads/{$this->video->video_filename}");
+            // Storage::disk('uploads')->delete("videos/{$this->video->video_filename}");
         }
 
         $this->video->video_public_id = $cloudinary_upload['public_id'];
