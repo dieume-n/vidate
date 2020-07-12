@@ -43,14 +43,11 @@
 
                         <div class="form-group">
                             <p>Channel image</p>
-                            <div class="custom-file">
-                                <input type="file" name="image" id="image"
-                                    class="custom-file-input @error('image') is-invalid @enderror">
-                                <label class="custom-file-label" for="image">Choose file...</label>
-                                @error('image')
-                                <div class=" invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <input type="file" name="image" id="image" class=" @error('image') is-invalid @enderror">
+
+                            @error('image')
+                            <div class=" invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <button class="btn btn-primary" type="submit">Update</button>
