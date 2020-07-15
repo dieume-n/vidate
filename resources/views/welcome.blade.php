@@ -2,34 +2,32 @@
 
 @section('content')
 <div class="container">
-    <h4>Latest videos</h4>
+    <h4 class="mb-3">Latest videos</h4>
     @if ($videos->count())
     <div class="row">
         @foreach ($videos as $video)
-        <div class="col-sm-3 mx-2">
-            <div class="card pb-0" style="width: 18rem;">
-                <img class="card-img-top" src="{{ $video->getThumbnail()}}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">
+        <div class="col-md-3 col-lg-3">
+            <div class="img-thumbnail">
+                <a href="{{ route('videos.show', $video->uid) }}">
+                    <img src="{{ $video->getThumbnail()}}" alt="video thumbnail" class="w-100">
+                </a>
+                <div class="caption mt-2 px-2">
+                    <p>
                         <a href="{{ route('videos.show', $video->uid) }}">{{ $video->title }}</a>
-                    </h5>
-                    <p class="card-text">
+                    </p>
+                    <p class="">
                         <a href="{{ route('channels.show', $video->channel->slug) }}">
                             {{ $video->channel->name }}
                         </a>
                     </p>
-                    <ul class="list-inline">
-                        <li class="list-inline-item card-text">
+                    <p class="d-flex justify-content-between">
+                        <span>
                             {{ $video->views->count() }} {{ Str::plural('view', $video->views->count())}}
-                        </li>
-
-                        <li class="list-inline-item card-text">
+                        </span>
+                        <span>
                             {{ $video->created_at->diffForHumans() }}
-                        </li>
-                    </ul>
-
-
-
+                        </span>
+                    </p>
                 </div>
             </div>
         </div>
