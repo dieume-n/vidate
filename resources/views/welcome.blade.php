@@ -7,7 +7,7 @@
     <div class="row">
         @foreach ($videos as $video)
         <div class="col-md-3 col-lg-3">
-            <div class="img-thumbnail">
+            <div class="img-thumbnail bg-white">
                 <a href="{{ route('videos.show', $video->uid) }}">
                     <img src="{{ $video->getThumbnail()}}" alt="video thumbnail" class="w-100">
                 </a>
