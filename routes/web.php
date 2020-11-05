@@ -1,15 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-
-if (App::environment('production')) {
-    URL::forceScheme('https');
-}
-
 
 
 Route::get('/', 'WelcomeController@index');

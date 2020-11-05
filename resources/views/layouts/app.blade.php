@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ secure_asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,17 +21,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
 
     <script>
-        window.vidate = {!! json_encode([
-            'url' => config('app.url'), 
-            'user' => [
-                'id' => Auth::check() ? Auth::user()->id :null ,
-                'authenticated' => Auth::check() ? true : false 
-            ]
-        ]); 
-        !!}
+        window.vidate = {
+            !!json_encode([
+                'url' => config('app.url'),
+                'user' => [
+                    'id' => Auth::check() ? Auth::user() - > id : null,
+                    'authenticated' => Auth::check() ? true : false
+                ]
+            ]);!!
+        }
     </script>
 
 </head>
