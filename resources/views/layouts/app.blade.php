@@ -24,15 +24,15 @@
     <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
 
     <script>
-        window.vidate = {
-            !!json_encode([
+        window.vidate = {!!
+            json_encode([
                 'url' => config('app.url'),
                 'user' => [
-                    'id' => Auth::check() ? Auth::user() - > id : null,
+                    'id' => Auth::check() ? Auth::user()-> id : null,
                     'authenticated' => Auth::check() ? true : false
                 ]
-            ]);!!
-        }
+            ]);
+        !!}
     </script>
 
 </head>
