@@ -28,7 +28,7 @@
         "@lossendae/vue-avatar": "^0.1.5",
         "@videojs/http-streaming": "^1.13.3",
         "@videojs/themes": "^1.0.0",
-        "moment": "^2.27.0",
+        "moment": "^2.29.2",
         "pluralize": "^8.0.0",
         "videojs-hls-quality-selector": "^1.1.1"
     }
