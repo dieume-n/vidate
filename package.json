@@ -20,13 +20,13 @@
         "resolve-url-loader": "^3.1.2",
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
-        "video.js": "^7.8.3",
+        "video.js": "^7.20.3",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "@lossendae/vue-avatar": "^0.1.5",
-        "@videojs/http-streaming": "^1.13.3",
+        "@videojs/http-streaming": "^2.15.0",
         "@videojs/themes": "^1.0.0",
         "moment": "^2.27.0",
         "pluralize": "^8.0.0",
